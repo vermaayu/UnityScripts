@@ -21,10 +21,8 @@ public class UI_manager : MonoBehaviour
     private Text _restart;
 
     private GameManager _gameManager;
-    // Start is called before the first frame update
     void Start()
     {
-
         _gameOver.SetActive(false);
         _scoreText.text = "Score: " + 0;
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
@@ -34,8 +32,6 @@ public class UI_manager : MonoBehaviour
             Debug.Log("GameManager is NULL");
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
         

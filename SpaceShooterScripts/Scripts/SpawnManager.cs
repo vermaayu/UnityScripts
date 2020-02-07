@@ -6,33 +6,32 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _enemyPrefab;
+    
     [SerializeField]
     private GameObject _enemyContainer;
-
-    private bool _stopSpawning = false;
-
-    //[SerializeField]
-    //private GameObject _tripleShotPowerupPrefab;
-    //[SerializeField]
-    //private GameObject _speedBoostPowerupPrefab;
+    
+    [SerializeField]
+    private GameObject _asteroidPrefab;
     
     [SerializeField]
     private GameObject[] _powerup;
 
-    //_tripleShotPowerupPrefab, _speedBoostPowerupPrefab
-
-    // Start is called before the first frame update
+    private bool _stopSpawning = false;
+    private float _spawnTime = 5.0f;
+    
     void Start()
     {
         StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnDifficultyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
+        StartCoroutine(SpawnAsteroidsRoutine());
+        
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //Coroutine
@@ -40,10 +39,13 @@ public class SpawnManager : MonoBehaviour
     {
         while (_stopSpawning == false)
         {
-            Vector3 spawn_pos = new Vector3(Random.Range(-9f, 9f), 6, 0);
+            Vector3 spawn_pos = new Vector3(Random.Range(-11f, 11f), 6, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, spawn_pos, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(5);
+            Debug.Log("The spawn time =" + _spawnTime);
+            yield return new WaitForSeconds(_spawnTime);
+            
+
         }
     }
 
@@ -60,5 +62,29 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+    }
+    IEnumerator SpawnDifficultyRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            if (_spawnTime > 1.0f)
+            {
+                _spawnTime -= 1.0f;
+                Debug.Log("Difficulty1 :" + _spawnTime);
+            }
+            else if (_spawnTime <= 1.0f && _spawnTime > 0.1f)
+            {
+                _spawnTime -= 0.1f;
+                Debug.Log("Difficulty2 :" + _spawnTime);
+            }
+            yield return new WaitForSeconds(10);
+        }
+    }
+
+    IEnumerator SpawnAsteroidsRoutine()
+    {
+            Vector3 asteroidSpawn = new Vector3(0, 6, 0);
+            GameObject asteroid = Instantiate(_asteroidPrefab, asteroidSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(5);   
     }
 }

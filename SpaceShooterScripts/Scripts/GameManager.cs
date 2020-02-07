@@ -17,12 +17,11 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
         {
-            SceneManager.LoadScene(0); //Current Game scene  
+            SceneManager.LoadScene(1); //Current Game scene  
         }
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();  
+            Application.Quit();
         }
     }
 }

@@ -20,8 +20,9 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
-    [SerializeField] //----------------------TripleShotPowerUp
+    [SerializeField]
     private bool _tripleShotEnabled = false;
+
     [SerializeField]
     private GameObject _tripleShotPrefab;
 
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour
 
     private UI_manager _uiManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, -2, 0);
@@ -54,8 +54,6 @@ public class Player : MonoBehaviour
         }
         
     }
-
-    // Update is called once per frame
     void Update()
     {
         CalculateMovement();
@@ -67,7 +65,6 @@ public class Player : MonoBehaviour
             FireLaser();
         }
     }
-
     void CalculateMovement() //All movement related commands go here.
     {
         if (_speedBoostEnabled)
@@ -113,7 +110,6 @@ public class Player : MonoBehaviour
         else if (transform.position.x <= -11.42f)
             transform.position = new Vector3(11.42f, transform.position.y, transform.position.z);
     }
-
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
@@ -127,7 +123,6 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
     }
-
     public void Damage()
     {
         if (_shieldEnabled)
@@ -150,19 +145,16 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     public void TripleShot()
     {
         _tripleShotEnabled = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
-
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5);
         _tripleShotEnabled = false;
     }
-
     public void SpeedBoost()
     {
         _speedBoostEnabled = true;
@@ -173,14 +165,12 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         _speedBoostEnabled = false;
     }
-
     public void Shield()
     {
         _shieldEnabled = true;
         _shieldVisuals.SetActive(true);
 
     }
-
     public void ScoreAdd(int points)
     {
         _score += points;
